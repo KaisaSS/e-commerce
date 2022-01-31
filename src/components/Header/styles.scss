@@ -38,9 +38,13 @@
 
       li {
         list-style-type: none;
+        display: inline-block;
+        margin-left: 1.5rem;
 
-        a {
+        a,
+        span {
           font-size: 1.7rem;
+          cursor: pointer;
         }
       }
     }
