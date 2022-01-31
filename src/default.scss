@@ -19,7 +19,8 @@ body {
 html,
 body,
 #root,
-.App {
+.App,
+.fullHeight {
   height: 100%;
 }
 
@@ -32,6 +33,7 @@ body {
 
 a {
   text-decoration: none;
+  color: black;
   cursor: pointer;
 }
 
