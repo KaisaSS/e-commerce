@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
@@ -70,6 +71,9 @@ class SignIn extends Component {
               <div>
                 <Button onClick={signInWithGoogle}>Sign in with Google</Button>
               </div>
+            </div>
+            <div className="links">
+              <Link to="/recover">Reset password</Link>
             </div>
           </form>
         </div>

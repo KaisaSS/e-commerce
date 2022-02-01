@@ -7,6 +7,7 @@ import MainLayout from "./layouts/MainLayout";
 //pages
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
+import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
 //styles
 import "./default.scss";
@@ -72,7 +73,7 @@ class App extends Component {
                 </MainLayout>
               )
             }
-          />{" "}
+          />
           <Route
             path="/login"
             render={() =>
@@ -84,6 +85,14 @@ class App extends Component {
                 </MainLayout>
               )
             }
+          />
+          <Route
+            path="/recover"
+            render={() => (
+              <MainLayout>
+                <Recovery />
+              </MainLayout>
+            )}
           />
         </Switch>
       </div>
