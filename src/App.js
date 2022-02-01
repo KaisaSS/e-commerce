@@ -6,7 +6,10 @@ import { setCurrentUser } from "./redux/User/user.actions";
 //layouts
 import HomepageLayout from "./layouts/HomepageLayout";
 import MainLayout from "./layouts/MainLayout";
+//hoc
+import WithAuth from "./hoc/withAuth";
 //pages
+import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Recovery from "./pages/Recovery";
@@ -50,27 +53,19 @@ const App = (props) => {
         />
         <Route
           path="/register"
-          render={() =>
-            currentUser ? (
-              <Redirect to="/" />
-            ) : (
-              <MainLayout>
-                <Registration />
-              </MainLayout>
-            )
-          }
+          render={() => (
+            <MainLayout>
+              <Registration />
+            </MainLayout>
+          )}
         />
         <Route
           path="/login"
-          render={() =>
-            currentUser ? (
-              <Redirect to="/" />
-            ) : (
-              <MainLayout>
-                <Login />
-              </MainLayout>
-            )
-          }
+          render={() => (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )}
         />
         <Route
           path="/recover"
@@ -78,6 +73,16 @@ const App = (props) => {
             <MainLayout>
               <Recovery />
             </MainLayout>
+          )}
+        />
+        <Route
+          path="/dashboard"
+          render={() => (
+            <WithAuth>
+              <MainLayout>
+                <Dashboard />
+              </MainLayout>
+            </WithAuth>
           )}
         />
       </Switch>

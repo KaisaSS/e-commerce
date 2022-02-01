@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
 import { auth, handleUserProfile } from "../../firebase/utils";
 import "./styles.scss";
 
-const Signup = () => {
+const Signup = (props) => {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +34,7 @@ const Signup = () => {
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await handleUserProfile(user, { displayName });
       reset();
+      props.history.push("/");
     } catch (err) {
       console.error(err);
     }
@@ -88,4 +90,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withRouter(Signup);
