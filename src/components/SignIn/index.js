@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
@@ -6,80 +6,61 @@ import FormInput from "../forms/FormInput";
 import { signInWithGoogle, auth } from "../../firebase/utils";
 import "./styles.scss";
 
-const initialState = {
-  email: "",
-  password: "",
-};
+const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-class SignIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...initialState,
-    };
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  }
-
-  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
 
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      this.setState({
-        ...initialState,
-      });
+      resetForm();
     } catch (err) {
       console.error(err);
     }
   };
 
-  render() {
-    const { email, password } = this.state;
-    const configAuthWrapper = {
-      headline: "Sign in",
-    };
+  const configAuthWrapper = {
+    headline: "Sign in",
+  };
 
-    return (
-      <AuthWrapper {...configAuthWrapper}>
-        <div className="formWrap">
-          <form onSubmit={this.handleSubmit}>
-            <FormInput
-              type="email"
-              name="email"
-              value={email}
-              placeholder="email"
-              handleChange={this.handleChange}
-            />
-            <FormInput
-              type="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              handleChange={this.handleChange}
-            />
-            <Button type="submit">Sign in</Button>
-            <div className="socialSignin">
-              <div>
-                <Button onClick={signInWithGoogle}>Sign in with Google</Button>
-              </div>
+  return (
+    <AuthWrapper {...configAuthWrapper}>
+      <div className="formWrap">
+        <form onSubmit={handleSubmit}>
+          <FormInput
+            type="email"
+            name="email"
+            value={email}
+            placeholder="email"
+            handleChange={(e) => setEmail(e.target.value)}
+          />
+          <FormInput
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Password"
+            handleChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit">Sign in</Button>
+          <div className="socialSignin">
+            <div>
+              <Button onClick={signInWithGoogle}>Sign in with Google</Button>
             </div>
-            <div className="links">
-              <Link to="/recover">Reset password</Link>
-            </div>
-          </form>
-        </div>
-      </AuthWrapper>
-    );
-  }
-}
+          </div>
+          <div className="links">
+            <Link to="/recover">Reset password</Link>
+          </div>
+        </form>
+      </div>
+    </AuthWrapper>
+  );
+};
 
 export default SignIn;
