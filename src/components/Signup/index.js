@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
+import { auth, handleUserProfile } from "../../firebase/utils";
 import "./styles.scss";
 
 const initialState = {
@@ -8,6 +9,7 @@ const initialState = {
   email: "",
   password: "",
   confirmPassword: "",
+  errors: [],
 };
 
 class Signup extends Component {
@@ -28,14 +30,44 @@ class Signup extends Component {
     });
   };
 
-  render() {
+  handleFormSubmit = async (e) => {
+    e.preventDefault();
     const { displayName, email, password, confirmPassword } = this.state;
+
+    if (password !== confirmPassword) {
+      const err = ["Passwords don't match"];
+      this.setState({
+        errors: err,
+      });
+      return;
+    }
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
+      await handleUserProfile(user, { displayName });
+      this.setState({
+        ...initialState,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  render() {
+    const { displayName, email, password, confirmPassword, errors } = this.state;
     return (
       <div className="signup">
         <div className="wrap">
           <h2>Sign up</h2>
+          {errors.length > 0 && (
+            <ul>
+              {errors.map((err, i) => {
+                return <li key={i}>{err}</li>;
+              })}
+            </ul>
+          )}
           <div className="formWrap">
-            <form>
+            <form onSubmit={this.handleFormSubmit}>
               <FormInput
                 type="text"
                 name="displayName"
