@@ -6,6 +6,10 @@ export const setCurrentUser = (user) => ({
   payload: user,
 });
 
+export const resetAuthForms = () => ({
+  type: userTypes.RESET_AUTH_FORMS,
+});
+
 export const signInUser =
   ({ email, password }) =>
   async (dispatch) => {

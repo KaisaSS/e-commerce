@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { resetPassword } from "../../redux/User/user.actions";
+import { resetPassword, resetAuthForms } from "../../redux/User/user.actions";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
@@ -20,6 +20,7 @@ const EmailPassword = (props) => {
 
   useEffect(() => {
     if (resetPasswordSuccess) {
+      dispatch(resetAuthForms());
       props.history.push("/login");
     }
   }, [resetPasswordSuccess]);
