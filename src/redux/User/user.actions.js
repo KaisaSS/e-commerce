@@ -1,5 +1,6 @@
 import userTypes from "./user.types";
 import { auth, handleUserProfile, GoogleProvider } from "../../firebase/utils";
+import { actionChannel } from "redux-saga/effects";
 
 export const emailSignInStart = (userCredentials) => ({
   type: userTypes.EMAIL_SIGN_IN_START,
@@ -42,6 +43,20 @@ export const userError = (err) => ({
   payload: err,
 });
 
+export const resetPasswordStart = (userCredentials) => ({
+  type: userTypes.RESET_PASSWORD_START,
+  payload: userCredentials,
+});
+
+export const resetPasswordSuccess = () => ({
+  type: userTypes.RESET_PASSWORD_SUCCESS,
+  payload: true,
+});
+
+export const resetUserState = () => ({
+  type: userTypes.RESET_USER_STATE,
+});
+
 // export const signInUser =
 //   ({ email, password }) =>
 //   async (dispatch) => {
@@ -59,34 +74,6 @@ export const userError = (err) => ({
 export const signUpUser =
   ({ displayName, email, password, confirmPassword }) =>
   async (dispatch) => {};
-
-export const resetPassword =
-  ({ email }) =>
-  async (dispatch) => {
-    const config = {
-      url: "http://localhost:3000/login",
-    };
-
-    try {
-      await auth
-        .sendPasswordResetEmail(email, config)
-        .then(() => {
-          dispatch({
-            type: userTypes.RESET_PASSWORD_SUCCESS,
-            payload: true,
-          });
-        })
-        .catch(() => {
-          const err = ["Email not found, please try again"];
-          dispatch({
-            type: userTypes.RESET_PASSWORD_ERROR,
-            payload: err,
-          });
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
 export const signInWithGoogle = () => async (dispatch) => {
   try {
