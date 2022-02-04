@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { signInUser, signInWithGoogle, resetAuthForms } from "../../redux/User/user.actions";
+import { emailSignInStart, signInWithGoogle, resetAuthForms } from "../../redux/User/user.actions";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
 import "./styles.scss";
 
 const mapState = ({ user }) => ({
-  signInSuccess: user.signInSuccess,
+  currentUser: user.currentUser,
 });
 
 const SignIn = (props) => {
-  const { signInSuccess } = useSelector(mapState);
+  const { currentUser } = useSelector(mapState);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (signInSuccess) {
+    if (currentUser) {
       resetForm();
-      dispatch(resetAuthForms());
       props.history.push("/");
     }
-  }, [signInSuccess]);
+  }, [currentUser]);
 
   const resetForm = () => {
     setEmail("");
@@ -32,7 +31,7 @@ const SignIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signInUser({ email, password }));
+    dispatch(emailSignInStart({ email, password }));
   };
 
   const handleGoogleSignin = () => {
@@ -51,7 +50,7 @@ const SignIn = (props) => {
             type="email"
             name="email"
             value={email}
-            placeholder="email"
+            placeholder="Email"
             handleChange={(e) => setEmail(e.target.value)}
           />
           <FormInput
