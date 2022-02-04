@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { emailSignInStart, signInWithGoogle, resetAuthForms } from "../../redux/User/user.actions";
+import { emailSignInStart, googleSignInStart } from "../../redux/User/user.actions";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
@@ -35,7 +35,7 @@ const SignIn = (props) => {
   };
 
   const handleGoogleSignin = () => {
-    dispatch(signInWithGoogle());
+    dispatch(googleSignInStart());
   };
 
   const configAuthWrapper = {
