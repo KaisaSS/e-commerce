@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withRouter, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { resetPasswordStart, resetUserState } from "../../redux/User/user.actions";
 import AuthWrapper from "../AuthWrapper";
 import Button from "../forms/Button";
@@ -64,4 +64,4 @@ const EmailPassword = (props) => {
   );
 };
 
-export default withRouter(EmailPassword);
+export default EmailPassword;

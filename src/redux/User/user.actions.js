@@ -1,6 +1,4 @@
 import userTypes from "./user.types";
-import { auth, handleUserProfile, GoogleProvider } from "../../firebase/utils";
-import { actionChannel } from "redux-saga/effects";
 
 export const emailSignInStart = (userCredentials) => ({
   type: userTypes.EMAIL_SIGN_IN_START,
@@ -10,15 +8,6 @@ export const emailSignInStart = (userCredentials) => ({
 export const SignInSuccess = (user) => ({
   type: userTypes.SIGN_IN_SUCCESS,
   payload: user,
-});
-
-export const setCurrentUser = (user) => ({
-  type: userTypes.SET_CURRENT_USER,
-  payload: user,
-});
-
-export const resetAuthForms = () => ({
-  type: userTypes.RESET_AUTH_FORMS,
 });
 
 export const checkUserSession = () => ({
@@ -60,17 +49,3 @@ export const resetUserState = () => ({
 export const googleSignInStart = () => ({
   type: userTypes.GOOGLE_SIGN_IN_START,
 });
-
-// export const signInUser =
-//   ({ email, password }) =>
-//   async (dispatch) => {
-//     try {
-//       await auth.signInWithEmailAndPassword(email, password);
-//       dispatch({
-//         type: userTypes.SIGN_IN_SUCCESS,
-//         payload: true,
-//       });
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
