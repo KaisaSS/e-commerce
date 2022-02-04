@@ -32,6 +32,16 @@ export const signOutUserSuccess = () => ({
   type: userTypes.SIGN_OUT_USER_SUCCESS,
 });
 
+export const signUpUserStart = (userCredentials) => ({
+  type: userTypes.SIGN_UP_USER_START,
+  payload: userCredentials,
+});
+
+export const userError = (err) => ({
+  type: userTypes.USER_ERROR,
+  payload: err,
+});
+
 // export const signInUser =
 //   ({ email, password }) =>
 //   async (dispatch) => {
@@ -48,27 +58,7 @@ export const signOutUserSuccess = () => ({
 
 export const signUpUser =
   ({ displayName, email, password, confirmPassword }) =>
-  async (dispatch) => {
-    if (password !== confirmPassword) {
-      const err = ["Passwords don't match"];
-      dispatch({
-        type: userTypes.SIGN_UP_ERROR,
-        payload: err,
-      });
-      return;
-    }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      await handleUserProfile(user, { displayName });
-      dispatch({
-        type: userTypes.SIGN_UP_SUCCESS,
-        payload: true,
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  async (dispatch) => {};
 
 export const resetPassword =
   ({ email }) =>
