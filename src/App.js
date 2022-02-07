@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { checkUserSession } from "./redux/User/user.actions";
+//components
+import AdminToolbar from "./components/AdminToolbar";
 //layouts
 import HomepageLayout from "./layouts/HomepageLayout";
 import MainLayout from "./layouts/MainLayout";
 //hoc
 import WithAuth from "./hoc/withAuth";
+import WithAdminAuth from "./hoc/withAdminAuth";
 //pages
+import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
@@ -25,6 +29,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <AdminToolbar />
       <Switch>
         <Route
           exact
@@ -67,6 +72,16 @@ const App = () => {
                 <Dashboard />
               </MainLayout>
             </WithAuth>
+          )}
+        />
+        <Route
+          path="/admin"
+          render={() => (
+            <WithAdminAuth>
+              <MainLayout>
+                <Admin />
+              </MainLayout>
+            </WithAdminAuth>
           )}
         />
       </Switch>
