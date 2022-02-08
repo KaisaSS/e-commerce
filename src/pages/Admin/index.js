@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProductStart, fetchProductsStart } from "../../redux/Products/products.actions";
+import { addProductStart, fetchProductsStart, deleteProductStart } from "../../redux/Products/products.actions";
 // import { firestore } from "./../../firebase/utils";
 import Button from "./../../components/forms/Button";
 import FormInput from "./../../components/forms/FormInput";
@@ -120,7 +120,7 @@ const Admin = (props) => {
                 <table className="results" border="0" cellPadding="10" cellSpacing="0">
                   <tbody>
                     {products.map((product, i) => {
-                      const { productName, productThumbnail, productPrice } = product;
+                      const { productName, productThumbnail, productPrice, documentID } = product;
                       return (
                         <tr key={i}>
                           <td>
@@ -128,6 +128,9 @@ const Admin = (props) => {
                           </td>
                           <td>{productName}</td>
                           <td>£{productPrice}</td>
+                          <td>
+                            <Button onClick={() => dispatch(deleteProductStart(documentID))}>Delete</Button>
+                          </td>
                         </tr>
                       );
                     })}

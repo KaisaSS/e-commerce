@@ -34,3 +34,18 @@ export const handleFetchProducts = () => {
       });
   });
 };
+
+export const handleDeleteProduct = (documentID) => {
+  return new Promise((res, rej) => {
+    firestore
+      .collection("products")
+      .doc(documentID)
+      .delete()
+      .then(() => {
+        res();
+      })
+      .catch((err) => {
+        rej(err);
+      });
+  });
+};
