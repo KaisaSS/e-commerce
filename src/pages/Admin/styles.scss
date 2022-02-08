@@ -21,3 +21,26 @@
     }
   }
 }
+
+.manageProducts {
+  h1 {
+    margin-top: 2rem;
+  }
+
+  table.results {
+    tr {
+      &:nth-child(even) {
+        background: #f3f3f3;
+      }
+
+      td {
+        padding-right: 3rem;
+      }
+
+      .thumb {
+        width: 12rem;
+        margin: 0;
+      }
+    }
+  }
+}

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductStart, fetchProductsStart } from "../../redux/Products/products.actions";
 // import { firestore } from "./../../firebase/utils";
 import Button from "./../../components/forms/Button";
 import FormInput from "./../../components/forms/FormInput";
@@ -6,14 +8,23 @@ import FormSelect from "./../../components/forms/FormSelect";
 import Modal from "./../../components/Modal";
 import "./styles.scss";
 
+const mapState = ({ productsData }) => ({
+  products: productsData.products,
+});
+
 const Admin = (props) => {
-  const [products, setProducts] = useState([]);
+  const { products } = useSelector(mapState);
+  const dispatch = useDispatch();
   const [hideModal, setHideModal] = useState(true);
   const [productCategory, setProductCategory] = useState("mens");
   const [productName, setProductName] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productImageURL, setProductImageURL] = useState("");
-  const [productPrice, setProductPrice] = useState(0);
+  const [productPrice, setProductPrice] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchProductsStart());
+  }, []);
 
   const toggleModal = () => setHideModal(!hideModal);
 
@@ -22,18 +33,26 @@ const Admin = (props) => {
     toggleModal,
   };
 
-  // useEffect(() => {
-  //   firestore
-  //     .collection("products")
-  //     .get()
-  //     .then((snapshot) => {
-  //       const snapshotData = snapshot.docs.map((doc) => doc.data());
-  //       setProducts(snapshotData);
-  //     });
-  // }, []);
+  const resetForm = () => {
+    setHideModal(true);
+    setProductCategory("mens");
+    setProductName("");
+    setProductThumbnail("");
+    setProductPrice(null);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    dispatch(
+      addProductStart({
+        productCategory,
+        productName,
+        productThumbnail,
+        productPrice,
+      })
+    );
+    resetForm();
   };
 
   return (
@@ -54,14 +73,14 @@ const Admin = (props) => {
               options={[
                 {
                   value: "mens",
-                  name: "Mens",
+                  name: "Men's",
                 },
                 {
                   value: "womens",
-                  name: "Womens",
+                  name: "Women's",
                 },
               ]}
-              handleSubmit={(e) => setProductCategory(e.target.value)}
+              handleChange={(e) => setProductCategory(e.target.value)}
             />
             <FormInput
               label="Name"
@@ -88,6 +107,37 @@ const Admin = (props) => {
           </form>
         </div>
       </Modal>
+      <div className="manageProducts">
+        <table border="0" cellPadding="0" cellSpacing="0">
+          <tbody>
+            <tr>
+              <th>
+                <h1>Manage products</h1>
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <table className="results" border="0" cellPadding="10" cellSpacing="0">
+                  <tbody>
+                    {products.map((product, i) => {
+                      const { productName, productThumbnail, productPrice } = product;
+                      return (
+                        <tr key={i}>
+                          <td>
+                            <img className="thumb" src={productThumbnail} />
+                          </td>
+                          <td>{productName}</td>
+                          <td>£{productPrice}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
