@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signOutUserStart } from "../../redux/User/user.actions";
-import { Link } from "react-router-dom";
 import "./styles.scss";
 import logo from "../../assets/logo.png";
 
@@ -25,6 +25,19 @@ const Header = (props) => {
             <img src={logo} alt="company logo" />
           </Link>
         </div>
+
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>|</li>
+            <li>
+              <Link to="/search">Search</Link>
+            </li>
+          </ul>
+        </nav>
+
         <div className="callToActions">
           {currentUser && (
             <ul>
