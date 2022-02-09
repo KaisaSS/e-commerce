@@ -19,6 +19,7 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
+import Search from "./pages/Search";
 //styles
 import "./default.scss";
 
@@ -40,6 +41,14 @@ const App = () => {
             <HomepageLayout>
               <Homepage />
             </HomepageLayout>
+          )}
+        />
+        <Route
+          path="/search"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
           )}
         />
         <Route
